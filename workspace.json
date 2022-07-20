@@ -1,7 +1,8 @@
 {
-  "$schema": "./node_modules/nx/schemas/workspace-schema.json",
-  "version": 2,
-  "projects": {
-    "svc-products": "apps/svc-products"
-  }
+	"$schema": "./node_modules/nx/schemas/workspace-schema.json",
+	"version": 2,
+	"projects": {
+		"shop-app": "apps/shop-app",
+		"svc-products": "apps/svc-products"
+	}
 }

@@ -1,0 +1,80 @@
+{
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "apps/shop-app/src",
+	"projectType": "application",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/web:webpack",
+			"outputs": ["{options.outputPath}"],
+			"defaultConfiguration": "production",
+			"options": {
+				"compiler": "swc",
+				"outputPath": "dist/apps/shop-app",
+				"index": "apps/shop-app/src/index.html",
+				"baseHref": "/",
+				"main": "apps/shop-app/src/main.tsx",
+				"polyfills": "apps/shop-app/src/polyfills.ts",
+				"tsConfig": "apps/shop-app/tsconfig.app.json",
+				"assets": ["apps/shop-app/src/favicon.ico", "apps/shop-app/src/assets"],
+				"styles": [],
+				"scripts": [],
+				"webpackConfig": "@nrwl/react/plugins/webpack"
+			},
+			"configurations": {
+				"development": {
+					"extractLicenses": false,
+					"optimization": false,
+					"sourceMap": true,
+					"vendorChunk": true
+				},
+				"production": {
+					"fileReplacements": [
+						{
+							"replace": "apps/shop-app/src/environments/environment.ts",
+							"with": "apps/shop-app/src/environments/environment.prod.ts"
+						}
+					],
+					"optimization": true,
+					"outputHashing": "all",
+					"sourceMap": false,
+					"namedChunks": false,
+					"extractLicenses": true,
+					"vendorChunk": false
+				}
+			}
+		},
+		"serve": {
+			"executor": "@nrwl/web:dev-server",
+			"defaultConfiguration": "development",
+			"options": {
+				"buildTarget": "shop-app:build",
+				"hmr": true
+			},
+			"configurations": {
+				"development": {
+					"buildTarget": "shop-app:build:development"
+				},
+				"production": {
+					"buildTarget": "shop-app:build:production",
+					"hmr": false
+				}
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["apps/shop-app/**/*.{ts,tsx,js,jsx}"]
+			}
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/apps/shop-app"],
+			"options": {
+				"jestConfig": "apps/shop-app/jest.config.ts",
+				"passWithNoTests": true
+			}
+		}
+	},
+	"tags": []
+}
