@@ -2,15 +2,17 @@ import mongoose from 'mongoose'
 import { composeMongoose } from 'graphql-compose-mongoose'
 import { schemaComposer } from 'graphql-compose'
 
-interface IProduct extends mongoose.Document {
-	name: string
+export interface IProduct {
+	title: string
 	price: number
 	description: string
 	category: string
 	image: string
 }
 
-const ProductSchema = new mongoose.Schema({
+export interface IProductDocument extends IProduct, mongoose.Document {}
+
+export const ProductSchema = new mongoose.Schema({
 	title: {
 		type: String,
 		required: true,
@@ -33,11 +35,11 @@ const ProductSchema = new mongoose.Schema({
 	},
 })
 
-const Product = mongoose.model<IProduct>('Product', ProductSchema)
+export const ProductModel = mongoose.model<IProductDocument>('Product', ProductSchema)
 
 const customizationOptions = {}
 
-const ProductTC = composeMongoose(Product, customizationOptions)
+export const ProductTC = composeMongoose(ProductModel, customizationOptions)
 
 schemaComposer.Query.addFields({
 	productOne: ProductTC.mongooseResolvers.findOne(),

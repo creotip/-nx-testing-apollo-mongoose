@@ -9,7 +9,10 @@ import mongoose from 'mongoose'
 const mongodbURI = process.env.MONGODB_URI
 const dbName = process.env.MONGODB_NAME
 
-const connectDB = async (mongodbURI: string, dbName: string) => {
+export const connectDB = async (mongodbURI: string, dbName: string) => {
+	if (!mongodbURI || !dbName) {
+		return Promise.reject('MongoDB URI or DB Name is not defined')
+	}
 	try {
 		await mongoose.connect(mongodbURI, { autoIndex: false, dbName }, (error) => {
 			if (error) {
